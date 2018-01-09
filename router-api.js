@@ -46,22 +46,22 @@ const users = [
   }
 ]
 
-router.get('/groups', auth.authenticate(), (req, res) => {
+router.get('/groups', (req, res) => {
   res.json(groups);
 });
 
-router.get('/users', auth.authenticate(), (req, res) => {
+router.get('/users', (req, res) => {
   res.json(users);
 });
 
-router.get('/links'), (req, res) => {
+router.get('/links', (req, res) => {
   client.get('links', function (err, data) {
     if (err) {
       console.log(err);
     }
     res.json(data);
   });
-}
+});
 
 router.post('/link'), (req, res) => {
   let link = {
@@ -74,15 +74,11 @@ router.post('/link'), (req, res) => {
   if (client.get('links') === null) {
     links = [];
   } else {
-    client.get('location', function (err, data) {
+    client.get('links', function (err, data) {
       if (err) {
         console.log(err);
       }
       links = JSON.parse(data);
-      // if (err) {
-      //   return console.log(err);
-      // }
-      // console.log('The value is ', data);
     });
   }
   links.unshift(link);
@@ -90,7 +86,7 @@ router.post('/link'), (req, res) => {
     if (err) {
       console.log(err);
     }
-  })
+  });
 }
 
 module.exports = router;
