@@ -10,6 +10,19 @@ client.on('error', (err) => {
   console.log(err);
 });
 
+let links;
+
+client.get('links', (err,data) => {
+  if (err) {
+    console.log(err)
+  }
+  if (data) {
+    links = JSON.parse(data);
+  } else {
+    links = [];
+  }
+});
+
 const groups = [
   {
     id: 0,
@@ -64,29 +77,41 @@ router.get('/links', (req, res) => {
 });
 
 router.post('/link'), (req, res) => {
+  console.log(req.body);
   let link = {
     title: req.body.title,
     url: req.body.url,
     tags: req.body.tags
-  }
-  let links;
-
-  if (client.get('links') === null) {
-    links = [];
-  } else {
-    client.get('links', function (err, data) {
-      if (err) {
-        console.log(err);
-      }
-      links = JSON.parse(data);
-    });
   }
   links.unshift(link);
   client.set('links', JSON.stringify(links), (err, data) => {
     if (err) {
       console.log(err);
     }
+    res.json(link);
   });
+}
+
+router.delete('/link'), (req, res) => {
+  console.log(req.body);
+  let link = {
+    title: req.body.title,
+    url: req.body.url,
+    tags: req.body.tags
+  }
+  for (let i = 0; i < links.length; i++) {
+    if (link == links[i]) {
+      links.splice(i, 1)
+    } else {
+      client.set('links', JSON.stringify(links), (err, data) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.sendStatus(200);
+        }
+      });
+    }
+  }
 }
 
 module.exports = router;

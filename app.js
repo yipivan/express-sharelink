@@ -3,7 +3,6 @@ const express = require('express');
 const reload = require('reload');
 const watch = require('watch');
 const bodyParser = require("body-parser");
-const jwt = require('jwt-simple');
 const axios = require('axios');
 
 const api = require('./router-api');
