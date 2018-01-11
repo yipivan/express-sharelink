@@ -9,7 +9,11 @@ const api = require('./router-api');
 
 const app = express();
 
-app.use(bodyParser.json());
+// parse application/x-www-form-urlencoded 
+app.use(bodyParser.urlencoded({ extended: false }))
+ 
+// parse application/json 
+app.use(bodyParser.json())
 
 // Reloading the backend when backend is changed.
 reloadServer = reload(app);

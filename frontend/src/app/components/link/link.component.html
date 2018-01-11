@@ -1,0 +1,19 @@
+<!-- <div>
+  <div class="card">
+    <div class="card-text">
+      {{link.url}}
+    </div>
+    <div class="card-text"><span *ngFor="let tag of link.tags">{{tag.display}} </span></div>
+  </div>
+  <br>
+</div> -->
+
+<li class="list-group-item d-flex justify-content-between align-items-center">
+  <a href="{{link.url}}">{{link.title}}</a>
+  <div>
+    <span class="badge badge-secondary badge-pill mr-2" *ngFor="let tag of link.tags">{{tag.display}}</span>
+    <button type="button" class="close" aria-label="Close" (click)="removeLink(link)">
+      <span aria-hidden="true">×</span>
+    </button> 
+  </div>
+</li>

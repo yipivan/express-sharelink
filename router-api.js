@@ -12,7 +12,7 @@ client.on('error', (err) => {
 
 let links;
 
-client.get('links', (err,data) => {
+client.get('links', (err, data) => {
   if (err) {
     console.log(err)
   }
@@ -68,7 +68,7 @@ router.get('/users', (req, res) => {
 });
 
 router.get('/links', (req, res) => {
-  client.get('links', function (err, data) {
+  client.get('links', (err, data) => {
     if (err) {
       console.log(err);
     }
@@ -77,7 +77,7 @@ router.get('/links', (req, res) => {
 });
 
 router.post('/link'), (req, res) => {
-  console.log(req.body);
+  console.log("posting");
   let link = {
     title: req.body.title,
     url: req.body.url,
@@ -92,22 +92,17 @@ router.post('/link'), (req, res) => {
   });
 }
 
-router.delete('/link'), (req, res) => {
-  console.log(req.body);
-  let link = {
-    title: req.body.title,
-    url: req.body.url,
-    tags: req.body.tags
-  }
+router.delete('/link/:title'), (req, res) => {
+  let title = req.params.title;
   for (let i = 0; i < links.length; i++) {
-    if (link == links[i]) {
+    if (title == links[i].title) {
       links.splice(i, 1)
     } else {
       client.set('links', JSON.stringify(links), (err, data) => {
         if (err) {
           console.log(err);
         } else {
-          res.sendStatus(200);
+          res.json(link);
         }
       });
     }
