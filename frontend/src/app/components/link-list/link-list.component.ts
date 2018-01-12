@@ -22,12 +22,18 @@ export class LinkListComponent implements OnInit {
 
   ngOnInit() {
     this.getLinks();
-    this.searchTerm = this.searchService.getSearchTerm();
+    // this.searchTerm = this.searchService.getSearchTerm();
   }
 
   getLinks() {
     this.dataService.getLinks().subscribe(links => {
+      // console.log(typeof links);
       this.links = links;
     })
+  }
+
+  onDeleteLink() {
+    console.log("eventemitter works");
+    this.getLinks();
   }
 }

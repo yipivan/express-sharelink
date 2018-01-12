@@ -23,42 +23,6 @@ client.get('links', (err, data) => {
   }
 });
 
-const groups = [
-  {
-    id: 0,
-    name: "Group A"
-  },
-  {
-    id: 1,
-    name: "Group B"
-  },
-  {
-    id: 2,
-    name: "Group C"
-  }
-]
-
-const users = [
-  {
-    id: 0,
-    name: "John Doe",
-    email: "john.doe@gmail.com",
-    password: "123456"
-  },
-  {
-    id: 1,
-    name: "Chan Siu Ming",
-    email: "chan.siu.ming@gmail.com",
-    password: "123456"
-  },
-  {
-    id: 2,
-    name: "Juan Nadie",
-    email: "juan.nadie@gmail.com",
-    password: "123456"
-  }
-]
-
 router.get('/groups', (req, res) => {
   res.json(groups);
 });
@@ -71,13 +35,13 @@ router.get('/links', (req, res) => {
   client.get('links', (err, data) => {
     if (err) {
       console.log(err);
+    } else {
+      res.json(JSON.parse(data));
     }
-    res.json(data);
   });
 });
 
-router.post('/link'), (req, res) => {
-  console.log("posting");
+router.post('/link', (req, res) => {
   let link = {
     title: req.body.title,
     url: req.body.url,
@@ -87,26 +51,32 @@ router.post('/link'), (req, res) => {
   client.set('links', JSON.stringify(links), (err, data) => {
     if (err) {
       console.log(err);
+    } else {
+      res.json(link);
     }
-    res.json(link);
   });
-}
+});
 
-router.delete('/link/:title'), (req, res) => {
+router.delete('/link/:title', (req, res) => {
+  let link;
   let title = req.params.title;
   for (let i = 0; i < links.length; i++) {
     if (title == links[i].title) {
-      links.splice(i, 1)
-    } else {
+      link = links[i];
+      links.splice(i, 1);
       client.set('links', JSON.stringify(links), (err, data) => {
         if (err) {
           console.log(err);
         } else {
+          // console.log("deleted");
+          // console.log(link);
           res.json(link);
         }
       });
+    } else {
+      res.sendStatus(404);
     }
   }
-}
+});
 
 module.exports = router;

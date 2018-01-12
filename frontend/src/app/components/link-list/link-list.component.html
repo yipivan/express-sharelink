@@ -1,6 +1,6 @@
 <!-- test: {{searchTerm}} -->
 <h1 class="my-3">Links shared:</h1>
 <ul class="list-group my-3">
-    <app-link *ngFor="let link of links | filter: searchTerm" [link]="link"></app-link>
+    <app-link *ngFor="let link of links | filter: searchTerm" [link]="link" (deletedLink)="onDeleteLink()"></app-link>
 </ul>
 <a class="btn btn-outline-primary mb-3" routerLink="/add">Add Link</a>

@@ -9,7 +9,7 @@ client.on("error", function (err) {
 });
 
 // client.set("string key", "string val", redis.print);
-client.set("links", JSON.stringify([{a: "a", b:"b"}]), redis.print);
+// client.set("links", JSON.stringify([{a: "a", b:"b"}]), redis.print);
 client.get("links", (err, replies) => {
     // replies.forEech(reply => {
     //     console.log(reply.a, reply.b);

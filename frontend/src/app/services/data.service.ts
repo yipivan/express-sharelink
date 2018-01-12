@@ -9,7 +9,7 @@ const httpOptions = {
 
 @Injectable()
 export class DataService {
-  links: Link[];
+  // links: Link[];
   constructor(
     private http: HttpClient
   ) { }
@@ -19,11 +19,11 @@ export class DataService {
   }
 
   addLink(link: Link): Observable<Link> {
-    return this.http.post<Link>('/api/link', link, httpOptions); 
+    return this.http.post<Link>('/api/link', link, httpOptions);
   }
 
   deleteLink(link: Link): Observable<Link> {
-    let url = `/api/link/?title=${link.title}`;
-    return this.http.delete<Link>(url, httpOptions)
+    let url = `/api/link/${link.title}`;
+    return this.http.delete<Link>(url, httpOptions);
   }
 }

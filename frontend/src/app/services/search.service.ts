@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class SearchService {
-  searchTerm: string;
+  searchTerm: Observable<string> = new Observable<string>();
   constructor() { }
 
   setSearchTerm(searchTerm: string) {
-    this.searchTerm = searchTerm;
+    this.searchTerm.next(searchTerm);
   }
   
-  getSearchTerm() {
+  getSearchTerm():Observable<string> {
     return this.searchTerm;
   }
 }
