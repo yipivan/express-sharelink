@@ -7,13 +7,13 @@ import { SearchService } from '../../services/search.service';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  constructor(public searchService: SearchService) { 
+  constructor(public searchService: SearchService) {
   }
 
   ngOnInit() {
   }
 
-  onSearch(event: any) {
-    this.searchService.setSearchTerm(event.target.value);
+  onKeyup(value: string): void {
+    this.searchService.search(value);
   }
 }

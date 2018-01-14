@@ -58,24 +58,23 @@ router.post('/link', (req, res) => {
 });
 
 router.delete('/link/:title', (req, res) => {
-  let link;
+  let found = false;
   let title = req.params.title;
   for (let i = 0; i < links.length; i++) {
     if (title == links[i].title) {
-      link = links[i];
+      found = true;
       links.splice(i, 1);
       client.set('links', JSON.stringify(links), (err, data) => {
         if (err) {
           console.log(err);
         } else {
-          // console.log("deleted");
-          // console.log(link);
-          res.json(link);
+          res.json();
         }
       });
-    } else {
-      res.sendStatus(404);
     }
+  }
+  if (!found) {
+    res.sendStatus(404);
   }
 });
 

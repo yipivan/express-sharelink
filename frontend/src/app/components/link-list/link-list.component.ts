@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { SearchService } from '../../services/search.service';
+import { Subject } from 'rxjs/Subject';
 
 import { Link } from '../../models/Link';
 
@@ -10,9 +11,9 @@ import { Link } from '../../models/Link';
   styleUrls: ['./link-list.component.css']
 })
 export class LinkListComponent implements OnInit {
-  // @Input('getSearch') searchTerm: string; //todo: update using service
+
   links: Link[]; 
-  searchTerm: string;
+  searchString: string = "";
 
   constructor(
     public dataService: DataService,
@@ -22,7 +23,9 @@ export class LinkListComponent implements OnInit {
 
   ngOnInit() {
     this.getLinks();
-    // this.searchTerm = this.searchService.getSearchTerm();
+    this.searchService.searchString$.subscribe(res => {
+      this.searchString = res;
+    })
   }
 
   getLinks() {
@@ -33,7 +36,8 @@ export class LinkListComponent implements OnInit {
   }
 
   onDeleteLink() {
-    console.log("eventemitter works");
+    // console.log("eventemitter works");
     this.getLinks();
   }
+
 }
